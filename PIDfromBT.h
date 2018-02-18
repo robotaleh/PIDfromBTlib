@@ -30,7 +30,9 @@ public:
 
   void setMaxIdeal(int maxIdeal);
 
-  bool update();
+  void update();
+
+  void execute_task(char letter, float value);
 
 private:
   void execute_task();

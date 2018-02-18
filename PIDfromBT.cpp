@@ -15,9 +15,9 @@ PIDfromBT::PIDfromBT(float* kp, float* ki, float* kd, int* vel, bool debug)
   _vel = vel; // V
 
   _debug = debug;
-  valor = "";
-  letra = ' ';
-  last_millis = millis();
+  _value = "";
+  _letter = ' ';
+  _last_update = millis();
   _type = TYPE_PIDV;
 }
 
@@ -32,9 +32,9 @@ PIDfromBT::PIDfromBT(float* kp, float* ki, float* kd, int* vel, int* ideal, bool
   _minIdeal = MIN_IDEAL;
 
   _debug = debug;
-  valor = "";
-  letra = ' ';
-  last_millis = millis();
+  _value = "";
+  _letter = ' ';
+  _last_update = millis();
   _type = TYPE_PIDVI;
 }
 
@@ -50,9 +50,9 @@ PIDfromBT::PIDfromBT(float* kp, float* ki, float* kd, int* vel, int* ideal, int*
   _minIdeal = MIN_IDEAL;
 
   _debug = debug;
-  valor = "";
-  letra = ' ';
-  last_millis = millis();
+  _value = "";
+  _letter = ' ';
+  _last_update = millis();
   _type = TYPE_PIDVIS;
 }
 
@@ -89,44 +89,44 @@ void PIDfromBT::execute_task(char letter, float value)
   switch (letter) {
     case 'P':
       if(_type < TYPE_PIDV)return;
-      *_kp = valor;
-      if (print) {
+      *_kp = value;
+      if (_debug) {
         Serial.println("Kp: " + String(value));
       }
       break;
     case 'I':
       if(_type < TYPE_PIDV)return;
       *_ki = value;
-      if (print) {
+      if (_debug) {
         Serial.println("Ki: " + String(value));
       }
       break;
     case 'D':
       if(_type < TYPE_PIDV)return;
       *_kd = value;
-      if (print) {
+      if (_debug) {
         Serial.println("Kd: " + String(value));
       }
       break;
     case 'V':
       if(_type < TYPE_PIDV)return;
       *_vel = value;
-      if (print) {
-        Serial.println("Vel: " + String(value));
+      if (_debug) {
+        Serial.println("Vel: " + String(*_vel));
       }
       break;
     case 'X':
       if(_type < TYPE_PIDVI)return;
-      *_ideal = map(value, -1000, 1000, minIdeal, maxIdeal);;
-      if (print) {
-        Serial.println("Ideal: " + String(*ideal));
+      *_ideal = map(value, -500, 500, _minIdeal, _maxIdeal);;
+      if (_debug) {
+        Serial.println("Ideal: " + String(*_ideal));
       }
       break;
     case 'S':
-      if(_type < TYPE_PIDVS)return;
-      *_suction = value.toInt();
-      if (print) {
-        Serial.println("Suc: " + String(value));
+      if(_type < TYPE_PIDVIS)return;
+      *_suction = value;
+      if (_debug) {
+        Serial.println("Suc: " + String(*_suction));
       }
       break;
   }
