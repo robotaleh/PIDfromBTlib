@@ -1,7 +1,6 @@
 #ifndef PIDfromBT_h
 #define PIDfromBT_h
 #define LIBRARY_VERSION 1.0
-#include <SoftwareSerial.h>
 class PIDfromBT
 {
 
