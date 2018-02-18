@@ -20,7 +20,7 @@ int vel = 0;
 int suc = 0;
 
 // Creación del Objeto PIDfromBT
-PIDfromBT pid_calibrate(&kp, &kd, &ki, &vel, &ideal, &suc, DEBUG);
+PIDfromBT pid_calibrate(&kp, &ki, &kd, &vel, &ideal, &suc, DEBUG);
 
 void setup() {
   // Inicia el Serial
